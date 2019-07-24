@@ -22,7 +22,7 @@ class AddPhoto extends Component {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
-            // base64: true,
+            base64: true,
         });
 
         console.log(result);
@@ -44,7 +44,7 @@ class AddPhoto extends Component {
             this.setState({ image: result.uri });
         }
     }
-
+    
     save = async () => {
         if (!this.props.name) {
             Alert.alert('Erreur!', noUser)

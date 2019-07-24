@@ -11,7 +11,7 @@ const storage = new Storage({
 exports.uploadImage = functions.https.onRequest((request, response) => {
   cors(request, response, ()=> {
     try {
-      fs.writeFileSync('/tmp/imageToSave.jpg', request.body.image, )
+      fs.writeFileSync('/tmp/imageToSave.jpg', request.body.image, 'base64')
 
       const bucket = storage.bucket('instagrand-rn.appspot.com')
       const id = uuid()
