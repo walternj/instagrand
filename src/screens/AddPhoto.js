@@ -18,6 +18,16 @@ class AddPhoto extends Component {
         comment: '',
     }
 
+    componentDidUpdate = prevProps => {
+        if (prevProps.loading && !this.props.loading) {
+            this.setState({
+                image: null,
+                comment: ''
+            })
+            this.props.navigation.navigate('Feed')
+        }        
+    }
+
     pickLocalImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -60,8 +70,8 @@ class AddPhoto extends Component {
                 comment: this.state.comment,
             }]
         })
-        this.setState({ image: null, comment: ''})
-        this.props.navigation.navigate('Feed')
+        /* this.setState({ image: null, comment: ''})
+        this.props.navigation.navigate('Feed') */
     }
 
     render() {
@@ -99,8 +109,10 @@ class AddPhoto extends Component {
                             </TouchableOpacity> 
 
                             <TouchableOpacity style={{alignItems:'center'}}
-                                onPress={this.save} >
-                                <Icon name='share' size={30} color="#000"/>  
+                                onPress={this.save} 
+                                    disabled={this.props.loading}
+                                    style={[this.loading ? styles.buttomDisabled : null]}>
+                                <Icon name={this.props.loading ? 'spinner' :'share'} size={30} color="#000"/>  
                                     <Text >share</Text>
                             </TouchableOpacity>
                         </View>
@@ -140,6 +152,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#4286F4',
         borderRadius : 5,
     },
+    buttomDisabled: {
+        backgroundColor: '#AAA'
+    },
     choicesContainer:{
         flexDirection: 'column',
         alignContent: 'center',
@@ -168,10 +183,11 @@ const styles = StyleSheet.create({
 
 //export default AddPhoto
 
-const mapStateToProps = ({ user }) => {
+const mapStateToProps = ({ user, posts }) => {
     return {
         email: user.email,
         name: user.name,
+        loading: posts.isUpLoading
     }
 }
 
