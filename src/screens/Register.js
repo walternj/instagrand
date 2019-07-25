@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView} from 'react-native'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
+import { connect } from 'react-redux'
+import { createUser } from '../store/actions/userAction'
+
 class Register extends Component {
   state = {
     name: '',
@@ -11,7 +14,7 @@ class Register extends Component {
   render(){
     return(
       <View style={styles.container}>
-         <KeyboardAwareScrollView contentContainerStyle=              {styles.keyBoardContainer}
+         <KeyboardAwareScrollView contentContainerStyle={styles.keyBoardContainer}
             enableOnAndroid={true}
             enableAutomaticScroll={true}
             keyboardOpeningTime={0} >
@@ -26,7 +29,9 @@ class Register extends Component {
                 <TextInput placeholder='Mot de passe' style={styles.input}
                 secureTextEntry={true} value={this.state.password} 
                 onChangeText={password => this.setState({password})}/>
-                <TouchableOpacity onPress={() => {}} style={styles.buttom}>
+                <TouchableOpacity 
+                  onPress={() => { this.props.onCreateUser(this.state)}} 
+                  style={styles.buttom}>
                   <Text style={styles.buttomText}>Sauvegarder</Text>
                 </TouchableOpacity>
               </View>
@@ -88,5 +93,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5
   }
 })
-
-export default Register
+const mapDispatchToProps = dispatch => {
+  return {
+    onCreateUser: user => dispatch(createUser(user))
+  }
+}
+export default connect(null, mapDispatchToProps)(Register)
+// export default Register
