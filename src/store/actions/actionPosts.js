@@ -36,7 +36,7 @@ export const addComment = payload => {
       .then(res => {
         const comments = res.data.comments || []
         comments.push(payload.comment)
-        axios.patch(`/posts/${payload.postId}/jason`, { comments})
+        axios.patch(`/posts/${payload.postId}.json`, { comments})
           .catch(err => console.log(err))
           .then(res => {
             dispatch(fetchPosts())
