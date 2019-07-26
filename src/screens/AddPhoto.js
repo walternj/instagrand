@@ -108,10 +108,9 @@ class AddPhoto extends Component {
                                 <Text >camera</Text>
                             </TouchableOpacity> 
 
-                            <TouchableOpacity style={{alignItems:'center'}}
-                                onPress={this.save} 
-                                    disabled={this.props.loading}
-                                    style={[this.loading ? styles.buttomDisabled : null]}>
+                            <TouchableOpacity style={[styles.buttom ,this.props.loading ? styles.buttomDisabled : null]}
+                                    onPress={this.save} 
+                                    disabled={this.props.loading}>
                                 <Icon name={this.props.loading ? 'spinner' :'share'} size={30} color="#000"/>  
                                     <Text >share</Text>
                             </TouchableOpacity>
@@ -120,7 +119,6 @@ class AddPhoto extends Component {
                 </View>
             </ScrollView>
             </KeyboardAwareScrollView>
-            
         )
     }
 }
@@ -147,12 +145,12 @@ const styles = StyleSheet.create({
         resizeMode: 'center',
     },
     buttom: {
-        marginTop: 30,
-        padding: 10,
+        alignItems:'center',
         backgroundColor: '#4286F4',
-        borderRadius : 5,
+        
     },
     buttomDisabled: {
+        alignItems:'center',
         backgroundColor: '#AAA'
     },
     choicesContainer:{
